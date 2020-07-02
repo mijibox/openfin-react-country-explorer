@@ -1,4 +1,4 @@
-# openfin-react-country-explorer
+# OpenFin React Country Explorer
 
 Simple React application running in OpenFin Runtime. 
 
