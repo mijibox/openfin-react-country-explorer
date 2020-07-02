@@ -1,6 +1,6 @@
 # openfin-react-country-explorer
 
-React in OpenFin
+Simple React application running in OpenFin Runtime. 
 
 ### to setup
 npm install
