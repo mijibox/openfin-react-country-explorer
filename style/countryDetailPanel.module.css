@@ -1,0 +1,19 @@
+.countryDetailPanel {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20pt 25pt;
+    width: calc(100% - 50pt);
+    height: calc(100% - 40pt);
+    overflow: auto;
+}
+
+.countryName {
+    color: rgb(32, 32, 192);
+    text-align: left;
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+.dt {
+    padding: 15pt 5pt 5pt 5pt;
+    font-weight: bold;
+}
