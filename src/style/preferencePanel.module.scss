@@ -8,6 +8,7 @@
     color: white;
     border-bottom: gray dotted;
     width: 100%;
+    cursor: pointer;
 }
 
 .settingsPanel {
@@ -28,7 +29,9 @@
 
 .image {
     vertical-align: text-bottom;
-    height: 19pt;
+    height: 14pt;
+    background-color: white;
+    margin: 2pt 3pt;
 }
 
 .textField {
@@ -42,7 +45,7 @@
 }
 
 .button {
-    margin: 5pt;
+    margin: 5pt 5pt 0 5pt;
     padding: 5pt 20pt 5pt 20pt;
 }
 

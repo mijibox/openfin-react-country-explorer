@@ -1,6 +1,6 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import { UserPreference, FilterPreference, AppProps, Bounds } from '../app';
-import style from './preferencePanel.module.scss'
+import style from '../style/preferencePanel.module.scss'
 
 interface TextFieldProps {
     name: string,
@@ -32,10 +32,11 @@ const PreferencePanel: React.FunctionComponent<PreferencePanelProps> = (props: P
     const [filterPopulationMax, setFilterPopulationMax] = useState("");
     let myRef = useRef(null);
 
-    useLayoutEffect(() => {
+    useEffect(()=>{
         if (myRef.current) {
             let element = myRef.current as unknown as HTMLDivElement;
             if (props.onPanelResize) {
+                console.debug("useEffect: preference panel rect", element.getBoundingClientRect());
                 props!.onPanelResize(element.getBoundingClientRect());
             }
         }

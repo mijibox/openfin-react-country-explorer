@@ -1,6 +1,6 @@
 import React from 'react'
 import { CountryData } from '../dataSource';
-import style from './countryDetailPanel.module.scss'
+import style from '../style/countryDetailPanel.module.scss'
 
 export interface CountryDataProp {
     countryData?: CountryData;

@@ -1,6 +1,6 @@
 import React from "react";
 import { CountryData } from "../dataSource";
-import style from './countryTable.module.scss';
+import style from '../style/countryTable.module.scss';
 
 interface CountryRowProps {
     key: string;

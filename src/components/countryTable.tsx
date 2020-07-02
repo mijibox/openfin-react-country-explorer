@@ -3,7 +3,7 @@ import { CountryData, CountryDataSource } from '../dataSource'
 import { AppProps } from '../app';
 import CountryTableRow from './countryTableRow';
 import CountryDatailPanel from './countryDetailPanel'
-import style from './countryTable.module.scss'
+import style from '../style/countryTable.module.scss'
 
 class CountryTable extends React.Component<AppProps> {
 

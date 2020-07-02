@@ -5,6 +5,11 @@
         "description": "OpenFin POC",
         "url": "https://cdn.example.com/index.html",
         "uuid": "OpenfinPOC",
+        "resizable": false,
+        "defaultWidth": 900,
+        "defaultHeight": 750,
+        "defaultCentered": true,
+        "saveWindowState": false,
         "autoShow": true
     },
     "runtime": {

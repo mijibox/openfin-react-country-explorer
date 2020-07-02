@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PreferencePanel from './components/preferencePanel'
 import CountryTable from './components/countryTable'
-import style from './app.module.scss'
+import style from './style/app.module.scss'
 
 export interface FilterPreference {
 	name: string;
@@ -50,7 +50,7 @@ class App extends Component {
 				}} onPreferenceChange={pref => {
 					this.updatePreference(pref);
 				}} />
-				<div style={{ position: 'absolute', top: this.state.tableTop, bottom: 0, width: "900px", padding: 0, margin: 0 }}>
+				<div style={{ position: 'absolute', top: this.state.tableTop, width: "100%", bottom: 0, padding: 0, margin: 0 }}>
 					<CountryTable preference={this.state.preference} />
 				</div>
 			</div>

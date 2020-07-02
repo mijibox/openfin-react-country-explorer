@@ -57,7 +57,7 @@ module.exports = {
             filename: 'styles.[hash]-[name].css'
         }),
         new CopyPlugin([
-            { from: 'res/', to: 'dist/' },
+            { from: 'public/', to: 'dist/' },
         ]),
     ],
     devServer: {
