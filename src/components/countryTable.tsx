@@ -11,8 +11,11 @@ class CountryTable extends React.Component<AppProps> {
 
     countryDataSource: CountryDataSource = new CountryDataSource();
     readonly detailWindowName = 'winCountryDetail';
+    readonly detailWindowWidth = 400;
+    readonly detailWindowHeight = 450;
     currentWindow?: fin._Window;
     detailWindow?: fin._Window;
+
 
     state = {
         selectedCountry: undefined,
@@ -63,12 +66,16 @@ class CountryTable extends React.Component<AppProps> {
             this.currentWindow?.getBounds().then(mainWinBounds => {
                 let posLeft = mainWinBounds.left + mainWinBounds.width;
                 this.detailWindow?.getBounds().then(detailWinBounds => {
-                    let posTop = Math.min(mouseTop, mainWinBounds.top + mainWinBounds.height - detailWinBounds.height);
-                    this.detailWindow!.showAt(posLeft, posTop).then(() => {
+                    // console.debug("detailWindow.bounds", detailWinBounds);
+                    let posTop = Math.min(mouseTop, mainWinBounds.top + mainWinBounds.height - this.detailWindowHeight);
+                    //openfin bug, the window becomes bigger and bigger when running in scaled display
+                    //workaround is to set the bounds back to default size
+                    this.detailWindow?.setBounds({ top: posTop, left: posLeft, width: this.detailWindowWidth, height: this.detailWindowHeight }).then(() => {
+                        return this.detailWindow?.show();
+                    }).then(() => {
                         this.detailWindow!.bringToFront();
                     });
                 });
-
             });
         });
     }
@@ -84,8 +91,8 @@ class CountryTable extends React.Component<AppProps> {
                 url: "/detail",
                 resizable: false,
                 frame: false,
-                defaultWidth: 400,
-                defaultHeight: 450,
+                defaultWidth: this.detailWindowWidth,
+                defaultHeight: this.detailWindowHeight,
                 defaultCentered: true,
                 saveWindowState: false,
                 autoShow: false
