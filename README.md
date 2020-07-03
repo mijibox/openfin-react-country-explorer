@@ -1,6 +1,6 @@
 # OpenFin React Country Explorer
 
-Simple React application running in OpenFin Runtime. 
+Simple React application running in OpenFin Runtime. It demostrates the setup of the development environment, the way to create and position a frameless window and inter window communication using [InterApplicationBus](https://cdn.openfin.co/docs/javascript/stable/InterApplicationBus.html).
 
 ### to setup
 npm install
