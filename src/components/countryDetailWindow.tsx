@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CountryData } from '../dataSource';
 import style from '../style/countryDetailWindow.module.scss'
 import CountryDatailPanel from './countryDetailPanel';
@@ -22,9 +22,21 @@ const CountryDatailWindow: React.FunctionComponent = (props) => {
 
     const [countryData, setCountryData] = useState<CountryData | undefined>(undefined);
 
-    fin.InterApplicationBus.subscribe({ uuid: '*' }, 'selectedCountry', (msg: CountryData) => {
-        setCountryData(msg);
-    });
+    useEffect(()=>{
+        let topic = 'selectedCountry';
+        let iabListener = (msg: CountryData) => {
+            setCountryData(msg);
+        }
+        let identity = { uuid: '*' };
+        fin.InterApplicationBus.subscribe(identity, topic, iabListener).then(()=>{
+            console.debug('subscribed to IAB topic: ' + topic);
+        });
+        return function cleanup() {
+            fin.InterApplicationBus.unsubscribe(identity, topic, iabListener).then(()=>{
+                console.debug('unsubscribed to IAB topic: ' + topic);
+            });
+        }
+    }, ['dummy']);
 
     return <div className={style.countryDetailWindow}>
         <WindowTitleBar />

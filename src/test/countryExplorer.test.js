@@ -1,8 +1,8 @@
-import React from 'react'
-import { render, queryByAttribute } from '@testing-library/react'
+import { queryByAttribute, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import PreferencePanel from '../components/preferencePanel'
+import React from 'react'
 import CountryTable from '../components/countryTable'
+import PreferencePanel from '../components/preferencePanel'
 
 const getById = queryByAttribute.bind(null, 'id');
 
