@@ -1,0 +1,41 @@
+$titleHeight: 18pt;
+
+.countryDetailWindow {
+    position: absolute;
+    border: 3pt transparent solid;
+    background-color: darkslategray;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.windowTitleBar {
+    -webkit-app-region: drag;
+    height: $titleHeight;   
+    color: white;
+}
+
+.windowContent {
+    position: absolute;
+    background-color: rgb(128,192,128);
+    top: $titleHeight;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.windowIcons {
+    display: block;
+    float: right;
+    -webkit-app-region: no-drag;
+}
+
+.windowIcon {
+    width: 16pt;
+    height: 16pt;
+}

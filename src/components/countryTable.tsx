@@ -4,10 +4,15 @@ import { AppProps } from '../app';
 import CountryTableRow from './countryTableRow';
 import CountryDatailPanel from './countryDetailPanel'
 import style from '../style/countryTable.module.scss'
+import { WindowOption } from 'openfin/_v2/api/window/windowOption';
+import { _Window } from 'openfin/_v2/api/window/window';
 
 class CountryTable extends React.Component<AppProps> {
 
     countryDataSource: CountryDataSource = new CountryDataSource();
+    readonly detailWindowName = 'winCountryDetail';
+    currentWindow?: fin._Window;
+    detailWindow?: fin._Window;
 
     state = {
         selectedCountry: undefined,
@@ -25,6 +30,16 @@ class CountryTable extends React.Component<AppProps> {
                 sortAscending: true
             });
         });
+
+        //if the window is reloaded, hidden detail window will hang around, find it and close it if it's there.
+        if (typeof fin !== 'undefined') {
+            if (!this.currentWindow) {
+                this.currentWindow = fin.Window.getCurrentSync();
+            }
+            fin.Window.wrap({ uuid: this.currentWindow.identity.uuid, name: this.detailWindowName }).then(w => {
+                w.close(true);
+            });
+        }
     }
 
     componentDidUpdate(prevProps: AppProps) {
@@ -42,8 +57,45 @@ class CountryTable extends React.Component<AppProps> {
         }
     }
 
-    populateCountryDetail(countryData: CountryData) {
-        this.setState({ selectedCountry: countryData });
+    showDetailWindow() {
+        fin.System.getMousePosition().then(p => {
+            let mouseTop = p.top;
+            this.currentWindow?.getBounds().then(mainWinBounds => {
+                let posLeft = mainWinBounds.left + mainWinBounds.width;
+                this.detailWindow?.getBounds().then(detailWinBounds => {
+                    let posTop = Math.min(mouseTop, mainWinBounds.top + mainWinBounds.height - detailWinBounds.height);
+                    this.detailWindow!.showAt(posLeft, posTop).then(() => {
+                        this.detailWindow!.bringToFront();
+                    });
+                });
+
+            });
+        });
+    }
+
+    populateCountryDetail(countryData: CountryData): void {
+        if (this.detailWindow) {
+            fin.InterApplicationBus.publish('selectedCountry', countryData);
+            this.showDetailWindow();
+        }
+        else {
+            let winOpts: WindowOption = {
+                name: this.detailWindowName,
+                url: "/detail",
+                resizable: false,
+                frame: false,
+                defaultWidth: 400,
+                defaultHeight: 450,
+                defaultCentered: true,
+                saveWindowState: false,
+                autoShow: false
+            };
+            fin.Window.create(winOpts).then((w: _Window) => {
+                fin.InterApplicationBus.publish('selectedCountry', countryData);
+                this.detailWindow = w;
+                this.showDetailWindow();
+            });
+        }
     }
 
     sortCountries(countries: CountryData[], sortBy: string, ascending: boolean): CountryData[] {
@@ -68,7 +120,7 @@ class CountryTable extends React.Component<AppProps> {
         });
     }
 
-    sortTableData(colName: string) {
+    sortTableData(colName: string): void {
         if (colName === this.state.sortBy) {
             //flip direction
             let countries = this.state.countries.reverse();
@@ -92,7 +144,7 @@ class CountryTable extends React.Component<AppProps> {
     render() {
         return (
             <div className={style.countryTablePanel}>
-                <div className={style.columnLeft}>
+                <div className={style.container}>
                     <div className={style.countryTableContainer}>
                         <table id="countryTable">
                             <thead>
@@ -131,9 +183,6 @@ class CountryTable extends React.Component<AppProps> {
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div id="detailContainer" className={style.columnRight}>
-                    <CountryDatailPanel countryData={this.state.selectedCountry} />
                 </div>
             </div>
         )

@@ -1,19 +1,8 @@
-.columnLeft {
-    float: left;
-    width: 45%;
+.container {
     padding-top: 37px;
     margin: 0px;
     height: calc(100% - 38px);
     background-color: rgb(64, 64, 64);
-}
-
-.columnRight {
-    float: left;
-    width: 55%;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    background-color: rgb(128,192,128);
 }
 
 .countryDataRow {

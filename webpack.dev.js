@@ -14,24 +14,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: [ './dist', './public' ],
-        before: function (app, server) {
-            // Replace 'cdn.openfin.co' URL's with webpack-dev-server endpoint when running locally
-            app.use(/\/?(.*app\.json)/, async (req, res, next) => {
-                const configPath = req.params[0]; // app.json path, relative to dist dir
-
-                // Parse app.json
-                const config = require(path.resolve('public', configPath));
-                const {url, applicationIcon} = config.startup_app;
-
-                // Edit manifest
-                config.startup_app.url = replaceUrl(url);
-                config.startup_app.applicationIcon = replaceUrl(applicationIcon);
-
-                // Return modified JSON to client
-                res.header('Content-Type', 'application/json; charset=utf-8');
-                res.send(JSON.stringify(config, null, 4));
-            });
-        },
+        historyApiFallback: true,
         after: function (app, server) {
             // Server ready, launch application
             const {launch} = require('hadouken-js-adapter');

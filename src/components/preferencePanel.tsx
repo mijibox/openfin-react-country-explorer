@@ -36,7 +36,6 @@ const PreferencePanel: React.FunctionComponent<PreferencePanelProps> = (props: P
         if (myRef.current) {
             let element = myRef.current as unknown as HTMLDivElement;
             if (props.onPanelResize) {
-                console.debug("useEffect: preference panel rect", element.getBoundingClientRect());
                 props!.onPanelResize(element.getBoundingClientRect());
             }
         }
