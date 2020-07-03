@@ -38,10 +38,12 @@ class CountryTable extends React.Component<AppProps> {
         if (typeof fin !== 'undefined') {
             if (!this.currentWindow) {
                 this.currentWindow = fin.Window.getCurrentSync();
+                fin.Window.wrap({ uuid: this.currentWindow.identity.uuid, name: this.detailWindowName }).then(w => {
+                   return w.close(true);
+                }).catch(err => {
+                    //OK not there.
+                });
             }
-            fin.Window.wrap({ uuid: this.currentWindow.identity.uuid, name: this.detailWindowName }).then(w => {
-                w.close(true);
-            });
         }
     }
 
